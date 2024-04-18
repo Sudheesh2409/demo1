@@ -24,6 +24,7 @@ const newschema = new mongoose.Schema({
 //     msg:"hello"
 // }
 
-const collection =mongoose.model("collection",newschema)
+
+const dataModel =mongoose.model("collection",newschema)
 // collection.insertMany([data])
- module.exports=collection
+ module.exports=dataModel

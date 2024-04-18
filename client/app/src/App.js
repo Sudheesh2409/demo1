@@ -1,49 +1,43 @@
-import React, { useState,useEffect} from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 
-function App(){
-    const [msg,setMsg]=useState(" ")
+function App() {
+    const [msg, setMsg] = useState("");
 
-    const dat={
-      "message":msg
+    const submit = async (e) => {
+        e.preventDefault();
+        alert("submitted");
+
+        try {
+            const response = await axios.post("http://localhost:4000/api/data/", { msg });
+            console.log("sent data", response.data);
+        } catch (error) {
+            console.error("error", error);
+        }
+
+        /*
+        // Using fetch instead of axios
+        fetch('http://localhost:4000/api/data/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ msg }),
+        })
+        .then(response => response.json())
+        .then(data => console.log("sent data", data))
+        .catch(error => console.error("error", error));
+        */
     }
 
-   
-    const submit=async(e)=>{
-      e.preventDefault() 
-      console.log(dat)
-      alert("submitted")
-      
-      // await axios.post("https://localhost:5000/",{msg})
-      // .then((response)=>{
-      //     console.log(response.json())
-      // })
-      
-      fetch('http://localhost:4000/api/data/',{
-        method:'POST',
-        headers:{
-          'Content-Type':'aplication/json'
-        },
-        body:JSON.stringify(dat),
-      })
-      .then(response => response.json())
-      .then(data => console.log("sended data",data))
-      .catch(error => console.error("error",error))
+    return (
+        <div>
+            <label>
+                <input type="text" onChange={(e) => { setMsg(e.target.value) }} />
+            </label>
+            <button type="submit" onClick={submit}>Submit</button>
+        </div>
+    );
 }
 
-
-  return(
-    <div>
-
-     
-      <label> <input type="text" onChange={(e)=>{setMsg(e.target.value)}}></input></label> 
-      <label> <input type="submit" value="submit" onClick={submit}></input></label> 
-    
-    </div>
-  )
-}
-
-export default App
-
-
-
+export default App;
